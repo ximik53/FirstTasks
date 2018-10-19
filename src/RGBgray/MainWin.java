@@ -1,9 +1,15 @@
 package RGBgray;
 
 import javax.imageio.ImageIO;
+import java.awt.event.ComponentEvent;
+import java.awt.image.RescaleOp;
+import java.lang.String;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 import java.awt.*;
+import java.awt.color.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentAdapter;
 import java.awt.image.BufferedImage;
@@ -11,20 +17,44 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class MainWin {
+public class MainWin extends JFrame{
     static MyFrame f;
     MyPanel pic;
     static BufferedImage imag;
     boolean loading = false;
     String fileName;
+    MyPanel pan;
+    float br;
+    static BufferedImage d3;
 
     public MainWin() {
         f = new MyFrame("Выберите изображение");
         f.setSize(480, 480);
+        JMenuBar menuBar = new  JMenuBar();
+        f.setJMenuBar(menuBar);
+        menuBar.setBounds(0,0,350,30);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JMenuBar menuBar = new JMenuBar();
-        f.setJMenuBar(menuBar);
+        JToolBar toolbar = new  JToolBar("Toolbar", JToolBar.VERTICAL);
+        toolbar.setBounds(0, 0, 30, 300);
+        f.add(toolbar);
+        JSlider bright = new JSlider(JSlider.VERTICAL,1,200,100);
+
+        toolbar.add(bright);
+
+        ChangeListener listener = new ChangeListener() {
+            public void stateChanged(ChangeEvent event) {
+
+                JSlider bright = (JSlider) event.getSource();
+                event.getSource();
+                br=bright.getValue();
+                System.out.println(br);
+                pic.repaint();
+                GrayWin.pic1.repaint();
+            }
+        };
+        bright.addChangeListener(listener);
+
         JMenu fileMenu = new JMenu("Файл");
         menuBar.add(fileMenu);
         Action loadAction = new AbstractAction("Загрузить") {
@@ -42,6 +72,7 @@ public class MainWin {
                         f.setSize(imag.getWidth(), imag.getWidth());
                         pic.setSize(imag.getWidth(), imag.getWidth());
                         pic.repaint();
+
                     } catch (FileNotFoundException ex) {
                         JOptionPane.showMessageDialog(f, "Такого файла не существует");
                     } catch (IOException ex) {
@@ -53,7 +84,6 @@ public class MainWin {
         };
         JMenuItem loadMenu = new JMenuItem(loadAction);
         fileMenu.add(loadMenu);
-
 
         Action grayAction = new AbstractAction("Сделать чернобелым") {
             public void actionPerformed(ActionEvent event) {
@@ -97,9 +127,8 @@ public class MainWin {
         pic.setOpaque(true);
         f.add(pic);
 
-
         f.addComponentListener(new ComponentAdapter() {
-            public void componentResized(java.awt.event.ComponentEvent evt) {
+            public void componentResized(ComponentEvent evt) {
 
                 if (loading == false) {
                     pic.setSize(f.getWidth(), f.getHeight());
@@ -127,7 +156,6 @@ public class MainWin {
         });
     }
 
-
     class MyFrame extends JFrame {
         public void paint(Graphics g) {
             super.paint(g);
@@ -148,9 +176,14 @@ public class MainWin {
                 Graphics2D d2 = (Graphics2D) imag.createGraphics();
                 d2.setColor(Color.white);
                 d2.fillRect(0, 0, this.getWidth(), this.getHeight());
+
             }
             super.paintComponent(g);
-            g.drawImage(imag, 0, 0, this);
+            float x =br/100;
+            RescaleOp rop = new RescaleOp(x, 0, null);
+
+            d3 = rop.filter(imag, null);
+            g.drawImage(d3, 0, 0, this);
         }
     }
 
