@@ -29,6 +29,7 @@ public class GrayWin
         f1.setJMenuBar(menuBar);
         JMenu fileMenu = new  JMenu("Файл");
         menuBar.add(fileMenu);
+        final BufferedImage[] buff = {new BufferedImage(d3.getWidth(), d3.getHeight(), BufferedImage.TYPE_BYTE_GRAY)};
 
         Action saveasAction = new  AbstractAction("Сохранить как...")
         {
@@ -48,11 +49,11 @@ public class GrayWin
                     }
                     if(jf.getFileFilter()==pngFilter)
                     {
-                        ImageIO.write(imag, "png", new  File(fileName+".png"));
+                        ImageIO.write(d3, "png", new  File(fileName+".png"));
                     }
                     else
                     {
-                        ImageIO.write(imag, "jpeg", new  File(fileName+".jpg"));
+                        ImageIO.write(d3, "jpeg", new  File(fileName+".jpg"));
                     }
                 }
                 catch(IOException ex)
@@ -65,10 +66,10 @@ public class GrayWin
         fileMenu.add(saveasMenu);
 
         pic1 = new  MyPanel();
+        pic1.setBounds(30,0,260,260);
         pic1.setOpaque(true);
         f1.add(pic1);
 
-        final BufferedImage[] buff = {new BufferedImage(d3.getWidth(), d3.getHeight(), BufferedImage.TYPE_BYTE_GRAY)};
 
         f1.addComponentListener(new  ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {

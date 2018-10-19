@@ -47,7 +47,6 @@ public class MainWin extends JFrame{
                 JSlider bright = (JSlider) event.getSource();
                 event.getSource();
                 br=bright.getValue();
-                System.out.println(br);
                 pic.repaint();
                 GrayWin.pic1.repaint();
             }
@@ -123,6 +122,7 @@ public class MainWin extends JFrame{
 
         pic = new MyPanel();
         pic.setBackground(Color.white);
+        pic.setBounds(30,30,260,260);
         pic.setOpaque(true);
         f.add(pic);
 
