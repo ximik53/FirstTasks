@@ -43,7 +43,6 @@ public class MainWin extends JFrame{
 
         ChangeListener listener = new ChangeListener() {
             public void stateChanged(ChangeEvent event) {
-
                 JSlider bright = (JSlider) event.getSource();
                 event.getSource();
                 br=bright.getValue();
@@ -180,7 +179,6 @@ public class MainWin extends JFrame{
             super.paintComponent(g);
             float x =br/100;
             RescaleOp rop = new RescaleOp(x, 0, null);
-
             d3 = rop.filter(imag, null);
             g.drawImage(d3, 0, 0, this);
         }
