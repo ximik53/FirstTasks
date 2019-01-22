@@ -2,7 +2,6 @@ package CalcGUI;
 
 import java.awt.*;
 import java.lang.String;
-import java.awt.event.*;
 import java.text.NumberFormat;
 import javax.swing.*;
 
@@ -22,8 +21,7 @@ public class CalculGUI extends JFrame {
     {
         NumberFormat.getIntegerInstance();
     }
-    int Res;
-    private JLabel Result =new JLabel("Ответ: "+Res);
+    private JLabel Result =new JLabel("Ответ: ");
 
     public CalculGUI() {
         super(" Calculator 9000 ");
@@ -50,22 +48,22 @@ public class CalculGUI extends JFrame {
         add(Arg2Input);
         Sum.setSize(75,25);
         Sum.setLocation(30,150);
-        Sum.addActionListener(e -> Result.setText("Ответ: "+Arg1Input.getText() + "+" + Arg2Input.getText() + "="+(Integer.parseInt(Arg1Input.getText())+Integer.parseInt(Arg2Input.getText()))));
+        Sum.addActionListener(e -> Result.setText("Ответ: "+Arg1Input.getText() + "+" + Arg2Input.getText() + "="+(Float.parseFloat(Arg1Input.getText())+Float.parseFloat(Arg2Input.getText()))));
         add(Sum);
         Ded.setSize(75,25);
         Ded.setLocation(110,150);
-        Ded.addActionListener(e -> Result.setText("Ответ: "+Arg1Input.getText() + "-" + Arg2Input.getText() + "="+(Integer.parseInt(Arg1Input.getText())-Integer.parseInt(Arg2Input.getText()))));
+        Ded.addActionListener(e -> Result.setText("Ответ: "+Arg1Input.getText() + "-" + Arg2Input.getText() + "="+(Float.parseFloat(Arg1Input.getText())-Float.parseFloat(Arg2Input.getText()))));
         add(Ded);
         Div.setSize(75,25);
         Div.setLocation(190,150);
-        Div.addActionListener(e -> Result.setText("Ответ: "+Arg1Input.getText() + "/" + Arg2Input.getText() + "="+(Integer.parseInt(Arg1Input.getText())/Integer.parseInt(Arg2Input.getText()))));
+        Div.addActionListener(e -> Result.setText("Ответ: "+Arg1Input.getText() + "/" + Arg2Input.getText() + "="+(Float.parseFloat(Arg1Input.getText())/Float.parseFloat(Arg2Input.getText()))));
         add(Div);
         Mul.setSize(75,25);
         Mul.setLocation(270,150);
-        Mul.addActionListener(e -> Result.setText("Ответ: "+Arg1Input.getText() + "*" + Arg2Input.getText() + "="+(Integer.parseInt(Arg1Input.getText())*Integer.parseInt(Arg2Input.getText()))));
+        Mul.addActionListener(e -> Result.setText("Ответ: "+Arg1Input.getText() + "*" + Arg2Input.getText() + "="+(Float.parseFloat(Arg1Input.getText())*Float.parseFloat(Arg2Input.getText()))));
         add(Mul);
-        Result.setSize(150,35);
-        Result.setLocation(140,190);
+        Result.setSize(300,35);
+        Result.setLocation(50,190);
         Result.setFont(new Font("Arial", 3,17));
         Result.setForeground(Color.BLUE);
         add(Result);
